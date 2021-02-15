@@ -36,11 +36,19 @@ public class Resersa {
 	
 	}
 	
-	public void alterarDatas(Date checkIn, Date checkOut) {
+	public String alterarDatas(Date checkIn, Date checkOut) {
+		 Date agora = new Date ();
+		 if (checkIn.before(agora)|| checkOut.before(agora)) {
+		return "Erro na reserva, as datas não podem ser anteriores";
+		 }
+		 if(!checkOut.after(checkIn)) {
+		return "Erro reserva da anteriro a data do chekin";
+				}
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
-		
+		return null;
 	}
+	
 
 	@Override
 	public String toString () {

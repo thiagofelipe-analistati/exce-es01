@@ -34,14 +34,11 @@ public class App {
 			System.out.println("Digite a data Da saída (dd/MM/yyyy): ");
 			 checkOut = sdf.parse(sc.next());
 			 
-			 Date agora = new Date ();
-			 if (checkIn.before(agora)|| checkOut.before(agora)) {
-				System.out.println("Erro na reserva, as datas não podem ser anteriores");
-			 }else  if(!checkOut.after(checkIn)) {
-					System.out.println("Erro reserva da anteriro a data do chekin");
-					}else{
-						reserva.alterarDatas(checkIn, checkOut);
-						System.out.println("Reserva" +reserva);
+			
+			String erro= reserva.alterarDatas(checkIn, checkOut);
+			if(erro != null) {
+				System.out.println("Erro na reserva: " +erro);
+			}else{System.out.println("Reserva" +reserva);
 		}
 		
 		
