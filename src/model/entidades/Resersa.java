@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import model.excecoes.DominioExcecoes;
+
 public class Resersa {
 	private Integer ReservaNumero;
 	private Date checkIn;
@@ -11,6 +13,9 @@ public class Resersa {
 	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public Resersa(Integer reservaNumero, Date checkIn, Date checkOut) {
+		if(!checkOut.after(checkIn)) {
+			throw  new DominioExcecoes( "Erro reserva da anteriro a data do chekin");
+					}
 		ReservaNumero = reservaNumero;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
@@ -36,17 +41,16 @@ public class Resersa {
 	
 	}
 	
-	public String alterarDatas(Date checkIn, Date checkOut) {
+	public void alterarDatas(Date checkIn, Date checkOut) {
 		 Date agora = new Date ();
 		 if (checkIn.before(agora)|| checkOut.before(agora)) {
-		return "Erro na reserva, as datas não podem ser anteriores";
+		throw  new DominioExcecoes("Erro na reserva, as datas não podem ser anteriores");
 		 }
 		 if(!checkOut.after(checkIn)) {
-		return "Erro reserva da anteriro a data do chekin";
+		throw  new DominioExcecoes( "Erro reserva da anteriro a data do chekin");
 				}
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
-		return null;
 	}
 	
 

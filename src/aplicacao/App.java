@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 import model.entidades.Resersa;
+import model.excecoes.DominioExcecoes;
 
 public class App {
 
@@ -14,37 +15,42 @@ public class App {
 		Scanner sc = new Scanner(System.in);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
-		System.out.println(" Número Reserva: ");
-		int numero = sc.nextInt();
-		System.out.println("Digite a data Da entrada (dd/MM/yyyy): ");
-		Date checkIn = sdf.parse(sc.next());
-		System.out.println("Digite a data Da saída (dd/MM/yyyy): ");
-		Date checkOut = sdf.parse(sc.next());
+		try {
+			System.out.println(" Número Reserva: ");
+			int numero = sc.nextInt();
+			System.out.println("Digite a data Da entrada (dd/MM/yyyy): ");
+			Date checkIn = sdf.parse(sc.next());
+			System.out.println("Digite a data Da saída (dd/MM/yyyy): ");
+			Date checkOut = sdf.parse(sc.next());
 		
-		if(!checkOut.after(checkIn)) {
 			System.out.println("Erro reserva da anteriro a data do chekin");
-		}else{
+	
 			Resersa reserva = new Resersa(numero, checkIn, checkOut);
 			System.out.println("Reserva" +reserva);
 			System.out.println();
 			System.out.println("Alteração da reserva: ");
 		
 			System.out.println("Digite a data Da entrada (dd/MM/yyyy): ");
-			 checkIn = sdf.parse(sc.next());
+			checkIn = sdf.parse(sc.next());
 			System.out.println("Digite a data Da saída (dd/MM/yyyy): ");
-			 checkOut = sdf.parse(sc.next());
+			checkOut = sdf.parse(sc.next());
 			 
 			
-			String erro= reserva.alterarDatas(checkIn, checkOut);
-			if(erro != null) {
-				System.out.println("Erro na reserva: " +erro);
-			}else{System.out.println("Reserva" +reserva);
+			reserva.alterarDatas(checkIn, checkOut);
+			System.out.println("Reserva: " +reserva);
 		}
-		
-		
+		catch (ParseException e) {
+			System.out.println("formato da Data Invalida!");
 		}
-		
-		
+		catch (DominioExcecoes e) {
+			System.out.println("Erro em reserva: "+ e.getMessage());
+		}
+		catch (RuntimeException e) {
+			System.out.println("Erro inesperado");
+		}
+	
+	
+	
 		
 		
 		
